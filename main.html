@@ -23,6 +23,7 @@ function GenerateNumbers() {
 
 
 function CreateBar(index,value) { 
+
     const div = document.createElement("div");
     
     //Set ID of the div
@@ -44,7 +45,16 @@ function CreateBar(index,value) {
  
 
 function CreateBarPlot() {
-	var bar_plot = document.createElement("p");
+	
+    //Regresh the barplot if one has been already generated
+    if (document.getElementById("bar_plot") == null) {
+    }
+    else {
+    document.getElementById("bar_plot").remove()
+    }
+	
+    var bar_plot = document.createElement("p");
+    bar_plot.id = "bar_plot"
     
     numbers = GenerateNumbers()
     fname.value = numbers;
@@ -61,3 +71,7 @@ function CreateBarPlot() {
 
 </body>
 </html> 
+
+
+
+
