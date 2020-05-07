@@ -2,13 +2,10 @@
 <html>
 <body style = "background: pink">
 
-<p id="word" style = "color: black"> This is something</p>
-<input type="text" id="fname" value="Some text...">
-<button onclick=CreateBarPlot()>Do it</button>
-<button onclick=timeout(0)>Iterate</button>
-<button onclick=bubble_sort()>Sort it</button>
+<p id="word" style = "color: black">Bubble sort: visualization</p>
+<button onclick=CreateBarPlot()>Generate data</button>
+<button onclick=bubble_sort()>Sort</button>
 
-<button onclick=switch_bars(BARS_DATA[0],BARS_DATA[1])>Switch Bars</button>
 
 
 <script>
@@ -16,7 +13,6 @@
 var BARS_DATA = []
 
 function GenerateNumbers() {
-	fname.value = "DUDE";
     var numbers = [];
     var i;
  	for (i = 0; i < 15; i++) {
@@ -64,7 +60,6 @@ function CreateBarPlot() {
 
 
     numbers = GenerateNumbers()
-    fname.value = numbers;
     var i;
     for (i = 0; i < numbers.length; i++){
     	var cur_bar = CreateBar(i,numbers[i]);	
