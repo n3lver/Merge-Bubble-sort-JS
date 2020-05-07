@@ -7,6 +7,8 @@
 <button onclick=CreateBarPlot()>Do it</button>
 <button onclick=timeout(0)>Iterate</button>
 
+<button onclick=switch_bars(BARS_DATA[0],BARS_DATA[1])>Switch Bars</button>
+
 
 <script>
 
@@ -82,16 +84,42 @@ function update_color(bar) {
 
 
 function timeout(i) {
-	if (i < BARS_DATA.length) {
-    setTimeout(function () {
-    BARS_DATA[i].style.background = 'red';
-    if (i > 0) {
-    	BARS_DATA[i-1].style.background = 'lightblue';
+	if (i <= BARS_DATA.length) {
+    	setTimeout(function () {
+    	if (i < BARS_DATA.length) {
+    		BARS_DATA[i].style.background = 'red';
+    	}
+    	if (i > 0) {
+    		BARS_DATA[i-1].style.background = 'lightblue';
+    	}	
+    	timeout(i+1);
+        }, 100);
     }
-    timeout(i+1);
-    }, 100);
-    }
+    
 }
+
+
+function switch_bars(bar1,bar2) {
+	
+    bar1_value = bar1.innerHTML
+    bar1_width = bar1.style.width
+    
+    bar2_value = bar2.innerHTML
+    bar2_width = bar2.style.width
+    
+    
+    //Perform switch
+    bar1.innerHTML = bar2_value
+    bar1.style.width = bar2_width
+    
+    bar2.innerHTML = bar1_value
+    bar2.style.width = bar1_width
+    
+ 
+    
+}
+
+
 
 </script>
 
