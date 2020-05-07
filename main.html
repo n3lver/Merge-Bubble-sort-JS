@@ -5,11 +5,12 @@
 <p id="word" style = "color: black"> This is something</p>
 <input type="text" id="fname" value="Some text...">
 <button onclick=CreateBarPlot()>Do it</button>
-
-<p id="BOY">"HI"</p>
+<button onclick=timeout(0)>Iterate</button>
 
 
 <script>
+
+var BARS_DATA = []
 
 function GenerateNumbers() {
 	fname.value = "DUDE";
@@ -45,6 +46,8 @@ function CreateBar(index,value) {
  
 
 function CreateBarPlot() {
+	//Refresh array if bar_plot has been already created
+    BARS_DATA = []
 	
     //Regresh the barplot if one has been already generated
     if (document.getElementById("bar_plot") == null) {
@@ -55,17 +58,41 @@ function CreateBarPlot() {
 	
     var bar_plot = document.createElement("p");
     bar_plot.id = "bar_plot"
-    
+
+
     numbers = GenerateNumbers()
     fname.value = numbers;
     var i;
     for (i = 0; i < numbers.length; i++){
-    bar_plot.appendChild(CreateBar(i,numbers[i]))
+    	var cur_bar = CreateBar(i,numbers[i]);	
+    	bar_plot.appendChild(cur_bar);
+        BARS_DATA.push(cur_bar)
     }
   document.body.append(bar_plot)
+  
+  
 	
 }
- 
+
+// Try to write test function that will iterate through the bars and flag those selected as red.
+
+function update_color(bar) {
+	bar.style.background = 'red'
+}
+
+
+function timeout(i) {
+	if (i < BARS_DATA.length) {
+    setTimeout(function () {
+    BARS_DATA[i].style.background = 'red';
+    if (i > 0) {
+    	BARS_DATA[i-1].style.background = 'lightblue';
+    }
+    timeout(i+1);
+    }, 100);
+    }
+}
+
 </script>
 
 
