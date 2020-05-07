@@ -39,17 +39,20 @@ function CreateBar(index,value) {
     div.style.margin = '1px';
     div.style.width =  (value*10)+'px'
     
-    document.body.append(div);
+    return div
  }
  
 
 function CreateBarPlot() {
+	var bar_plot = document.createElement("p");
+    
     numbers = GenerateNumbers()
     fname.value = numbers;
     var i;
-    for (i = 0; i < numbers.length-1; i++){
-    CreateBar(i,numbers[i])
+    for (i = 0; i < numbers.length; i++){
+    bar_plot.appendChild(CreateBar(i,numbers[i]))
     }
+  document.body.append(bar_plot)
 	
 }
  
@@ -58,7 +61,3 @@ function CreateBarPlot() {
 
 </body>
 </html> 
-
-
-
-
