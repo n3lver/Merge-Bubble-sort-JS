@@ -19,7 +19,7 @@ function GenerateNumbers() {
 	fname.value = "DUDE";
     var numbers = [];
     var i;
- 	for (i = 0; i < 9; i++) {
+ 	for (i = 0; i < 15; i++) {
     	numbers.push(Math.floor(Math.random() * (70 - 1) ) + 1);
     }
     return numbers
@@ -101,6 +101,10 @@ function timeout(i) {
 
 
 function bubble_sort(i=1,switched=false) {
+	if (i > 1) {
+    BARS_DATA[i-1].style.background = 'lightblue';
+    BARS_DATA[i-2].style.background = 'lightblue';
+    }
 	if (i == BARS_DATA.length && switched == false) {
     	return true;
     }
@@ -110,7 +114,13 @@ function bubble_sort(i=1,switched=false) {
         switched = false;
     }
     
+    
+    
+    BARS_DATA[i-1].style.background = 'red';
+    BARS_DATA[i].style.background = 'red';
     setTimeout(function() {
+    
+    //Highlight the baBARS_DATA[i-1].rs that are about to be compared
     
     var left_val = parseInt(BARS_DATA[i-1].innerHTML);
     var right_val = parseInt(BARS_DATA[i].innerHTML);
@@ -119,7 +129,7 @@ function bubble_sort(i=1,switched=false) {
         switch_bars(BARS_DATA[i-1], BARS_DATA[i])
     }
     bubble_sort(i+1,switched)
-    },100);
+    },50);
 
 }
 
