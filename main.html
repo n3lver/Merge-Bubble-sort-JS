@@ -6,7 +6,7 @@
 <input type="text" id="fname" value="Some text...">
 <button onclick=CreateBarPlot()>Do it</button>
 <button onclick=timeout(0)>Iterate</button>
-<button onclick=bubble_sort(1,false)>Sort it</button>
+<button onclick=bubble_sort()>Sort it</button>
 
 <button onclick=switch_bars(BARS_DATA[0],BARS_DATA[1])>Switch Bars</button>
 
@@ -100,11 +100,7 @@ function timeout(i) {
 }
 
 
-function bubble_sort(i,switched) {
-	/*The initial values for aruments must be:
-    i=1, switched=False
-    */
-
+function bubble_sort(i=1,switched=false) {
 	if (i == BARS_DATA.length && switched == false) {
     	return true;
     }
@@ -156,3 +152,7 @@ function switch_bars(bar1,bar2) {
 
 </body>
 </html> 
+
+
+
+
