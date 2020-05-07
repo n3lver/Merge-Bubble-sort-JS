@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body style = "background: pink">
+
+<p id="word" style = "color: black"> This is something</p>
+<input type="text" id="fname" value="Some text...">
+<button onclick=CreateBarPlot()>Do it</button>
+
+<p id="BOY">"HI"</p>
+
+
+<script>
+
+function GenerateNumbers() {
+	fname.value = "DUDE";
+    var numbers = [];
+    var i;
+ 	for (i = 0; i < 9; i++) {
+    	numbers.push(Math.floor(Math.random() * (70 - 1) ) + 1);
+    }
+    return numbers
+}
+
+
+function CreateBar(index,value) { 
+    const div = document.createElement("div");
+    
+    //Set ID of the div
+    div.id = 'bar' + index
+    
+    //Configure text properites
+    div.innerHTML = value;
+    div.style.color = 'black';
+    div.style.textAlign = "right";
+    
+    //Configure bar properties
+    div.style.background = 'lightblue';
+    div.style.padding = '2.5px';
+    div.style.margin = '1px';
+    div.style.width =  (value*10)+'px'
+    
+    document.body.append(div);
+ }
+ 
+
+function CreateBarPlot() {
+    numbers = GenerateNumbers()
+    fname.value = numbers;
+    var i;
+    for (i = 0; i < numbers.length-1; i++){
+    CreateBar(i,numbers[i])
+    }
+	
+}
+ 
+</script>
+
+
+</body>
+</html> 
+
+
+
+
