@@ -44,14 +44,14 @@ function merge(ar1,ar2){
 }
 
 
-var ar = [1,2,3,4,1,6]
+var ar0 = [1,2,3,4,1,6,11,1,59,2]
 var ar1 = [1,2,8,4,1,6]
 var ar2 = [4,1,5,2]
 var ar3 = [4,1]
 
-
-var a3 = MergeSort(ar)
-console.log("FINAL DUDE")
-console.log([1,2,8,4,1,6])
-
-
+var init_ar = ar0
+console.log("Initial array")
+console.log(init_ar)
+var sorted_ar = MergeSort(init_ar)
+console.log("Sorted array")
+console.log(sorted_ar)
