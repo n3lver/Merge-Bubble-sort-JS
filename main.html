@@ -29,9 +29,14 @@
         if (sel.value == 'BubbleSort') {
           bubble_sort()
         }
+        
+        if (sel.value == 'MergeSort') {
+        MergeSort(BARS_DATA)
+        visualize_merge()
+        }
        }
 
-      function GenerateNumbers(count = 15) {
+      function GenerateNumbers(count = 25) {
         var numbers = [];
         var i;
         for (i = 0; i < count; i++) {
@@ -50,12 +55,12 @@
 
         //Configure text properites
         div.innerHTML = value;
-        div.style.color = 'black';
+        div.style.color = 'transparent';
         div.style.textAlign = "right";
 
         //Configure bar properties
         div.style.background = 'lightblue';
-        div.style.padding = '2.5px';
+        div.style.padding = '0.01px';
         div.style.margin = '1px';
         div.style.width = (value * 10) + 'px'
 
@@ -85,7 +90,8 @@
         document.body.append(bar_plot)
       }
 
-
+			//FUNCTIONS FOR THE BUBBLE SORT
+      
       function bubble_sort(i = 1, switched = false) {
 
         if (i > 1) {
@@ -138,6 +144,69 @@
         bar2.innerHTML = bar1_value
         bar2.style.width = bar1_width
       }
+      
+      //FUNCTIONS FOR THE MERGE SORT
+  var MOVEMENT_DATA = [];
+      function MergeSort(array) {
+      
+        if (array.length == 1) {
+        	return array
+        }
+
+        var mid = Math.ceil((array.length)/2)
+        var left = array.slice(0,mid);
+        var right = array.slice(mid);
+        
+
+        var left_ar = MergeSort(left)
+        var right_ar = MergeSort(right)
+
+        return merge(left_ar,right_ar)
+      }
+      
+      function merge(ar1,ar2) {
+      	//Combine both arrays into one
+        var all_bars = []; 
+        all_bars = ar1.concat(ar2)
+     
+        //Exctract all numeric values of each bar into an array
+        var all_values = [];
+        var i;
+        for (i=0;i<all_bars.length;i++){
+        	all_values.push(parseInt(all_bars[i].innerHTML))
+        }
+
+        all_values.sort(function(a, b){return a-b})
+        
+         for (i=0;i<all_bars.length;i++){
+         	MOVEMENT_DATA.push([all_bars[i].id, all_values[i]])
+         }
+         
+         return all_bars	 
+      }
+      
+ function visualize_merge(i=0) {
+			if (i>0){
+      	var prev_bar = document.getElementById(MOVEMENT_DATA[i-1][0])
+      	prev_bar.style.background = 'lightblue'
+      }
+      if (i == MOVEMENT_DATA.length) {
+      	return true
+      }
+      
+      var cur_barID = MOVEMENT_DATA[i][0];
+      var cur_barVAL = MOVEMENT_DATA[i][1];
+      var cur_bar = document.getElementById(cur_barID)
+      cur_bar.style.background = 'red';
+      setTimeout(function() {
+      	cur_bar.innerHTML = cur_barVAL
+      	cur_bar.style.width = (cur_barVAL * 10) + 'px'
+        visualize_merge(i+1)
+      },50)
+
+ }
+      
+      
 
     </script>
 
