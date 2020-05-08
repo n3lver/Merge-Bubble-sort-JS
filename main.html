@@ -12,10 +12,10 @@
 
 var BARS_DATA = []
 
-function GenerateNumbers() {
+function GenerateNumbers(count=15) {
     var numbers = [];
     var i;
- 	for (i = 0; i < 15; i++) {
+ 	for (i = 0; i < count; i++) {
     	numbers.push(Math.floor(Math.random() * (70 - 1) ) + 1);
     }
     return numbers
@@ -49,12 +49,10 @@ function CreateBarPlot() {
     BARS_DATA = []
 	
     //Regresh the barplot if one has been already generated
-    if (document.getElementById("bar_plot") == null) {
+    if (document.getElementById("bar_plot") != null) {
+    	document.getElementById("bar_plot").remove()
     }
-    else {
-    document.getElementById("bar_plot").remove()
-    }
-	
+
     var bar_plot = document.createElement("p");
     bar_plot.id = "bar_plot"
 
@@ -67,39 +65,16 @@ function CreateBarPlot() {
         BARS_DATA.push(cur_bar)
     }
   document.body.append(bar_plot)
-  
-  
-	
-}
-
-// Try to write test function that will iterate through the bars and flag those selected as red.
-
-function update_color(bar) {
-	bar.style.background = 'red'
-}
-
-
-function timeout(i) {
-	if (i <= BARS_DATA.length) {
-    	setTimeout(function () {
-    	if (i < BARS_DATA.length) {
-    		BARS_DATA[i].style.background = 'red';
-    	}
-    	if (i > 0) {
-    		BARS_DATA[i-1].style.background = 'lightblue';
-    	}	
-    	timeout(i+1);
-        }, 100);
-    }
-    
 }
 
 
 function bubble_sort(i=1,switched=false) {
-	if (i > 1) {
+	
+    if (i > 1) {
     BARS_DATA[i-1].style.background = 'lightblue';
     BARS_DATA[i-2].style.background = 'lightblue';
     }
+    
 	if (i == BARS_DATA.length && switched == false) {
     	return true;
     }
@@ -110,24 +85,25 @@ function bubble_sort(i=1,switched=false) {
     }
     
     
-    
     BARS_DATA[i-1].style.background = 'red';
     BARS_DATA[i].style.background = 'red';
     setTimeout(function() {
     
-    //Highlight the baBARS_DATA[i-1].rs that are about to be compared
     
+    //Highlight the bars that are about to be compared
     var left_val = parseInt(BARS_DATA[i-1].innerHTML);
     var right_val = parseInt(BARS_DATA[i].innerHTML);
+    
+    
     if (left_val > right_val) {
     	switched = true;
         switch_bars(BARS_DATA[i-1], BARS_DATA[i])
     }
+    
     bubble_sort(i+1,switched)
     },50);
 
 }
-
 
 
 function switch_bars(bar1,bar2) {
@@ -144,10 +120,7 @@ function switch_bars(bar1,bar2) {
     bar1.style.width = bar2_width
     
     bar2.innerHTML = bar1_value
-    bar2.style.width = bar1_width
-    
- 
-    
+    bar2.style.width = bar1_width  
 }
 
 
