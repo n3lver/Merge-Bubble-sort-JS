@@ -35,7 +35,7 @@
         }
        }
 
-      function GenerateNumbers(count = 15) {
+      function GenerateNumbers(count = 4) {
         var numbers = [];
         var i;
         for (i = 0; i < count; i++) {
@@ -146,6 +146,7 @@
       
       //FUNCTIONS FOR THE MERGE SORT
       function MergeSort(array) {
+      
         if (array.length == 1) {
         	return array
         }
@@ -153,6 +154,7 @@
         var mid = Math.ceil((array.length)/2)
         var left = array.slice(0,mid);
         var right = array.slice(mid);
+        
 
         var left_ar = MergeSort(left)
         var right_ar = MergeSort(right)
@@ -161,52 +163,52 @@
       }
       
       function merge(ar1,ar2) {
-        var sorted_values = [];
+      	//Combine both arrays into one
+        var all_bars = []; 
+        all_bars = ar1.concat(ar2)
+     
+        //Exctract all numeric values of each bar into an array
+        var all_values = [];
+        var i;
+        for (i=0;i<all_bars.length;i++){
+        	all_values.push(parseInt(all_bars[i].innerHTML))
+        }
 
-        var ar1_to_pop = ar1.slice();
-        var ar2_to_pop = ar2.slice();
-        
-        while (ar1_to_pop.length != 0 && ar2_to_pop.length != 0) {
-          var ar1_value = parseInt(ar1_to_pop[0].innerHTML)
-          var ar2_value = parseInt(ar2_to_pop[0].innerHTML)
-        
-          if (ar1_value < ar2_value) {
-            sorted_values.push(ar1_value)
-            ar1_to_pop.splice(0,1)
-          }
-          else {
-            sorted_values.push(ar2_value)
-            ar2_to_pop.splice(0,1)
-          }
-         }
+        all_values.sort(function(a, b){return a-b})
+        //console.log(all_values)
          
-         var current_bars = ar1.concat(ar2)
-         if (!(sorted_values.length == current_bars.length)) {
-         	alert("Length of the `sorted_values` and  `current_bars`  must be the identical!")
-         }
-         update_bars_merge(current_bars,sorted_values,0)
          
+        //Update each bar
+        /*for (i=0;i<all_bars.length;i++){
+        all_bars[i].innerHTML = all_values[i];
+        all_bars[i].style.width = (all_values[i] * 10) + 'px'
+        }*/
+        
+        update_bars_merge(all_bars,all_values,0);
+         
+         //THE PROBLEM IS HAPPENING BECAUSE YOU DON"T RETURN ANYTHING, BUT YOU MUST
+         return all_bars
 				      
       
       }
       
       
-      function update_bars_merge(bars_array,values,i=0) {
-      if (i > 0) {
-      bars_array[i-1].style.color = 'lightblue'
-      }
-      
-      if (i == bars_array.length) {
-       return true
-      }
-      
-      bars_array[i].style.color = 'red'
-      setTimeout(function() {
-      bars_array[i].innerHTML = values[i]
-      bars_array[i].style.width = (values[i] * 10) + 'px'
-      },500)
-      
-      update_bars_merge(bars_array,values,i+1)
+      function update_bars_merge(bars_array,values,i) {
+        if (i > 0) {
+        bars_array[i-1].style.background = 'lightblue'
+        }
+
+        if (i == bars_array.length) {
+         return true
+        }
+
+        bars_array[i].style.background = 'red'
+        setTimeout(function() {
+        bars_array[i].innerHTML = values[i]
+        bars_array[i].style.width = (values[i] * 10) + 'px'
+        update_bars_merge(bars_array,values,i+1)
+        },500)
+
       }
       
 
