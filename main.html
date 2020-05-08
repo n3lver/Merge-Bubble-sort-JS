@@ -4,13 +4,32 @@
   <body style="background: pink">
 
     <p id="word" style="color: black">Bubble sort: visualization</p>
-    <button onclick=CreateBarPlot()>Generate data</button>
-    <button onclick=bubble_sort()>Sort</button>
+    <p>
+      <button onclick=CreateBarPlot()>Generate data</button> 
+    </p>
+    
+    <p>
+      <label for="sorting_algo">Choose algorithm:</label>
+      <select id="sorting_algo" name="cars">
+        <option value="BubbleSort">Bubble sort</option>
+        <option value="MergeSort">Merge sort</option>
+        <option value="RandomSort">Random sort</option>
+      </select>
+      <button onclick=ChooseSortingAlgorithm()>Sort</button>
+    </p>
 
 
 
     <script>
       var BARS_DATA = []
+      
+      function ChooseSortingAlgorithm() {
+        var sel = document.getElementById('sorting_algo');
+
+        if (sel.value == 'BubbleSort') {
+          bubble_sort()
+        }
+       }
 
       function GenerateNumbers(count = 15) {
         var numbers = [];
@@ -126,4 +145,3 @@
   </body>
 
 </html>
-
