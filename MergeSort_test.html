@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+  <body style="background: pink">
+
+    <p id="word" style="color: black">Bubble sort: visualization</p>
+    <p>
+      <button onclick=CreateBarPlot()>Generate data</button> 
+    </p>
+    
+    <p>
+      <label for="sorting_algo">Choose algorithm:</label>
+      <select id="sorting_algo" name="cars">
+        <option value="BubbleSort">Bubble sort</option>
+        <option value="MergeSort">Merge sort</option>
+        <option value="RandomSort">Random sort</option>
+      </select>
+      <button onclick=ChooseSortingAlgorithm()>Sort</button>
+    </p>
+
+
+
+    <script>
+      var BARS_DATA = []
+      
+      function ChooseSortingAlgorithm() {
+        var sel = document.getElementById('sorting_algo');
+
+        if (sel.value == 'BubbleSort') {
+          bubble_sort()
+        }
+        
+        if (sel.value == 'MergeSort') {
+        MergeSort(BARS_DATA)
+        }
+       }
+
+      function GenerateNumbers(count = 15) {
+        var numbers = [];
+        var i;
+        for (i = 0; i < count; i++) {
+          numbers.push(Math.floor(Math.random() * (70 - 1)) + 1);
+        }
+        return numbers
+      }
+
+
+      function CreateBar(index, value) {
+
+        const div = document.createElement("div");
+
+        //Set ID of the div
+        div.id = 'bar' + index
+
+        //Configure text properites
+        div.innerHTML = value;
+        div.style.color = 'black';
+        div.style.textAlign = "right";
+
+        //Configure bar properties
+        div.style.background = 'lightblue';
+        div.style.padding = '2.5px';
+        div.style.margin = '1px';
+        div.style.width = (value * 10) + 'px'
+
+        return div
+      }
+
+
+      function CreateBarPlot() {
+
+        //Regresh the barplot if one has been already generated
+        if (document.getElementById("bar_plot") != null) {
+        	BARS_DATA = []
+          document.getElementById("bar_plot").remove()
+        }
+
+        var bar_plot = document.createElement("p");
+        bar_plot.id = "bar_plot"
+
+
+        numbers = GenerateNumbers()
+        var i;
+        for (i = 0; i < numbers.length; i++) {
+          var cur_bar = CreateBar(i, numbers[i]);
+          bar_plot.appendChild(cur_bar);
+          BARS_DATA.push(cur_bar)
+        }
+        document.body.append(bar_plot)
+      }
+
+			//FUNCTIONS FOR THE BUBBLE SORT
+      
+      function bubble_sort(i = 1, switched = false) {
+
+        if (i > 1) {
+          BARS_DATA[i - 1].style.background = 'lightblue';
+          BARS_DATA[i - 2].style.background = 'lightblue';
+        }
+
+        if (i == BARS_DATA.length && switched == false) {
+          return true;
+        } else if (i == BARS_DATA.length && switched == true) {
+          i = 1;
+          switched = false;
+        }
+
+
+        BARS_DATA[i - 1].style.background = 'red';
+        BARS_DATA[i].style.background = 'red';
+        setTimeout(function() {
+
+
+          //Highlight the bars that are about to be compared
+          var left_val = parseInt(BARS_DATA[i - 1].innerHTML);
+          var right_val = parseInt(BARS_DATA[i].innerHTML);
+
+
+          if (left_val > right_val) {
+            switched = true;
+            switch_bars(BARS_DATA[i - 1], BARS_DATA[i])
+          }
+
+          bubble_sort(i + 1, switched)
+        }, 50);
+
+      }
+
+
+      function switch_bars(bar1, bar2) {
+
+        bar1_value = bar1.innerHTML
+        bar1_width = bar1.style.width
+
+        bar2_value = bar2.innerHTML
+        bar2_width = bar2.style.width
+
+
+        //Perform switch
+        bar1.innerHTML = bar2_value
+        bar1.style.width = bar2_width
+
+        bar2.innerHTML = bar1_value
+        bar2.style.width = bar1_width
+      }
+      
+      //FUNCTIONS FOR THE MERGE SORT
+      function MergeSort(array) {
+        if (array.length == 1) {
+        	return array
+        }
+
+        var mid = Math.ceil((array.length)/2)
+        var left = array.slice(0,mid);
+        var right = array.slice(mid);
+
+        var left_ar = MergeSort(left)
+        var right_ar = MergeSort(right)
+
+        return merge(left_ar,right_ar)
+      }
+      
+      function merge(ar1,ar2) {
+        var sorted_values = [];
+
+        var ar1_to_pop = ar1.slice();
+        var ar2_to_pop = ar2.slice();
+        
+        while (ar1_to_pop.length != 0 && ar2_to_pop.length != 0) {
+          var ar1_value = parseInt(ar1_to_pop[0].innerHTML)
+          var ar2_value = parseInt(ar2_to_pop[0].innerHTML)
+        
+          if (ar1_value < ar2_value) {
+            sorted_values.push(ar1_value)
+            ar1_to_pop.splice(0,1)
+          }
+          else {
+            sorted_values.push(ar2_value)
+            ar2_to_pop.splice(0,1)
+          }
+         }
+         
+         var current_bars = ar1.concat(ar2)
+         if (!(sorted_values.length == current_bars.length)) {
+         	alert("Length of the `sorted_values` and  `current_bars`  must be the identical!")
+         }
+         update_bars_merge(current_bars,sorted_values,0)
+         
+				      
+      
+      }
+      
+      
+      function update_bars_merge(bars_array,values,i=0) {
+      if (i > 0) {
+      bars_array[i-1].style.color = 'lightblue'
+      }
+      
+      if (i == bars_array.length) {
+       return true
+      }
+      
+      bars_array[i].style.color = 'red'
+      setTimeout(function() {
+      bars_array[i].innerHTML = values[i]
+      bars_array[i].style.width = (values[i] * 10) + 'px'
+      },500)
+      
+      update_bars_merge(bars_array,values,i+1)
+      }
+      
+
+    </script>
+
+
+  </body>
+
+</html>
