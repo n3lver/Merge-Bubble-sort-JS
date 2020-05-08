@@ -35,7 +35,7 @@
         }
        }
 
-      function GenerateNumbers(count = 4) {
+      function GenerateNumbers(count = 10) {
         var numbers = [];
         var i;
         for (i = 0; i < count; i++) {
@@ -175,7 +175,7 @@
         }
 
         all_values.sort(function(a, b){return a-b})
-        //console.log(all_values)
+        console.log(all_values)
          
          
         //Update each bar
@@ -184,13 +184,29 @@
         all_bars[i].style.width = (all_values[i] * 10) + 'px'
         }*/
         
-        update_bars_merge(all_bars,all_values,0);
+        //Try using loop
+        for (i=0;i<all_bars.length;i++){
+        	if (i > 1) {
+          	all_bars[i-1].style.background = 'lightblue'
+          }
+        	all_bars[i].style.background = 'red'
+        	setTimeout(updateBar,1000,all_bars[i],all_values[i])
+        }
+        
+        
+        //update_bars_merge(all_bars,all_values,0);
          
          //THE PROBLEM IS HAPPENING BECAUSE YOU DON"T RETURN ANYTHING, BUT YOU MUST
          return all_bars
-				      
-      
+				 
       }
+      
+      
+function updateBar(bar,value){
+	 bar.style.width = (value*10) + 'px'
+   bar.innerHTML = value
+}
+      
       
       
       function update_bars_merge(bars_array,values,i) {
