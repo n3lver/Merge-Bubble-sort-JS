@@ -5,32 +5,52 @@
 
     <p id="word" style="color: black">Bubble sort: visualization</p>
     <p>
-      <button onclick=CreateBarPlot()>Generate data</button> 
+      <button id = "GenerateData" onclick=CreateBarPlot()>Generate data</button> 
     </p>
     
     <p>
       <label for="sorting_algo">Choose algorithm:</label>
-      <select id="sorting_algo" name="cars">
+      <select id="sorting_algo">
         <option value="BubbleSort">Bubble sort</option>
         <option value="MergeSort">Merge sort</option>
         <option value="RandomSort">Random sort</option>
       </select>
-      <button onclick=ChooseSortingAlgorithm()>Sort</button>
+      <button id = "DoSort" onclick=ChooseSortingAlgorithm()>Sort</button>
     </p>
 
 
 
     <script>
-      var BARS_DATA = []
+      var BARS_DATA = [];
+      var MOVEMENT_DATA = []; //Needed for the MERGE SORT
+      
+      
+      function LockButtons() {
+      	var button1 = document.getElementById("GenerateData")
+        button1.setAttribute("onclick", null)
+        button1 = document.getElementById("DoSort")
+        button1.setAttribute("onclick", null)        
+      }
+      
+      function UnlockButtons() {
+      	var button1 = document.getElementById("GenerateData")
+        button1.onclick = function(){CreateBarPlot()}
+        button1 = document.getElementById("DoSort")
+        button1.onclick = function(){ChooseSortingAlgorithm()}
+      
+      }
       
       function ChooseSortingAlgorithm() {
         var sel = document.getElementById('sorting_algo');
+        //Prevent user from clicking on `Generate Data` and `Sort` by locking them
+        LockButtons();
 
         if (sel.value == 'BubbleSort') {
           bubble_sort()
         }
         
         if (sel.value == 'MergeSort') {
+        MOVEMENT_DATA = [];
         MergeSort(BARS_DATA)
         visualize_merge()
         }
@@ -100,6 +120,7 @@
         }
 
         if (i == (BARS_DATA.length-step) && switched == false) {
+          UnlockButtons();
           return true;
         } else if (i == (BARS_DATA.length-step) && switched == true) {
           i = 1;
@@ -147,7 +168,6 @@
       }
       
       //FUNCTIONS FOR THE MERGE SORT
-  var MOVEMENT_DATA = [];
       function MergeSort(array) {
       
         if (array.length == 1) {
@@ -192,6 +212,7 @@
       	prev_bar.style.background = 'lightblue'
       }
       if (i == MOVEMENT_DATA.length) {
+      	UnlockButtons()
       	return true
       }
       
