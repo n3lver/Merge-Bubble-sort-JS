@@ -3,7 +3,7 @@
 
   <body style="background: grey">
 
-    <p id="word" style="color: black">Bubble sort: visualization</p>
+    <p id="word" style="color: black">Bubble/Merge sort: visualization</p>
     <p>
       <button id = "GenerateData" onclick=CreateBarPlot()>Generate data</button> 
     </p>
@@ -13,7 +13,6 @@
       <select id="sorting_algo">
         <option value="BubbleSort">Bubble sort</option>
         <option value="MergeSort">Merge sort</option>
-        <option value="RandomSort">Random sort</option>
       </select>
       <button id = "DoSort" onclick=ChooseSortingAlgorithm()>Sort</button>
     </p>
@@ -51,7 +50,7 @@
       
       function update_metdata_string(array_access, comparisons) {
        	var metadata_p = document.getElementById('MetaData')
-      	metadata_p.innerHTML = 'Array access: ' + array_access + Array(10).fill('\xa0').join('') + 'Comparisons made: ' + comparisons
+      	metadata_p.innerHTML = 'Array access: ' + array_access + Array(10).fill('\xa0').join('')
       }
       
       
@@ -248,6 +247,9 @@
       var cur_barVAL = MOVEMENT_DATA[i][1];
       var cur_bar = document.getElementById(cur_barID)
       cur_bar.style.background = 'red';
+      count_of_array_access += 1
+      update_metdata_string(count_of_array_access,0)
+      
       setTimeout(function() {
       	cur_bar.innerHTML = cur_barVAL
       	cur_bar.style.width = (cur_barVAL * 10) + 'px'
