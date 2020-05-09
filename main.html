@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 
-  <body style="background: pink">
+  <body style="background: grey">
 
-    <p id="word" style="color: black">Bubble/Merge sort: visualization</p>
+    <p id="word" style="color: black">Bubble sort: visualization</p>
     <p>
       <button id = "GenerateData" onclick=CreateBarPlot()>Generate data</button> 
     </p>
@@ -13,9 +13,11 @@
       <select id="sorting_algo">
         <option value="BubbleSort">Bubble sort</option>
         <option value="MergeSort">Merge sort</option>
+        <option value="RandomSort">Random sort</option>
       </select>
       <button id = "DoSort" onclick=ChooseSortingAlgorithm()>Sort</button>
     </p>
+    <p id="MetaData"></p>
 
 
 
@@ -23,6 +25,14 @@
       var BARS_DATA = [];
       var MOVEMENT_DATA = []; //Needed for the MERGE SORT
       
+      /*Needed to count how many times sorting algorithm 
+      accessed values in the array*/
+      var count_of_array_access = 0;
+      var comparisons_made = 0;
+      
+      
+      //Instatniate MetaData paragraph 
+      update_metdata_string(0,0)
       
       function LockButtons() {
       	var button1 = document.getElementById("GenerateData")
@@ -36,13 +46,21 @@
         button1.onclick = function(){CreateBarPlot()}
         button1 = document.getElementById("DoSort")
         button1.onclick = function(){ChooseSortingAlgorithm()}
-      
       }
+      
+      
+      function update_metdata_string(array_access, comparisons) {
+       	var metadata_p = document.getElementById('MetaData')
+      	metadata_p.innerHTML = 'Array access: ' + array_access + Array(10).fill('\xa0').join('') + 'Comparisons made: ' + comparisons
+      }
+      
       
       function ChooseSortingAlgorithm() {
         var sel = document.getElementById('sorting_algo');
         //Prevent user from clicking on `Generate Data` and `Sort` by locking them
         LockButtons();
+        count_of_array_access = 0;
+        comparisons_made = 0;
 
         if (sel.value == 'BubbleSort') {
           bubble_sort()
@@ -55,7 +73,7 @@
         }
        }
 
-      function GenerateNumbers(count = 30) {
+      function GenerateNumbers(count = 15) {
         var numbers = [];
         var i;
         for (i = 0; i < count; i++) {
@@ -74,7 +92,7 @@
 
         //Configure text properites
         div.innerHTML = value;
-        div.style.color = 'black';
+        div.style.color = 'transparent';
         div.style.textAlign = "right";
 
         //Configure bar properties
@@ -94,6 +112,11 @@
         	BARS_DATA = []
           document.getElementById("bar_plot").remove()
         }
+        
+        //Refresh metadata
+        count_of_array_access = 0;
+     		comparisons_made = 0;
+        update_metdata_string(0,0);
 
         var bar_plot = document.createElement("p");
         bar_plot.id = "bar_plot"
@@ -130,10 +153,16 @@
 
         BARS_DATA[i - 1].style.background = 'red';
         BARS_DATA[i].style.background = 'red';
+        
+        //Update access count and output it on the screen
+        count_of_array_access += 2;
+        comparisons_made += 1;
+         update_metdata_string(count_of_array_access,comparisons_made);
+        
+        
+        
         setTimeout(function() {
-
-
-          //Highlight the bars that are about to be compared
+        //Highlight the bars that are about to be compared
           var left_val = parseInt(BARS_DATA[i - 1].innerHTML);
           var right_val = parseInt(BARS_DATA[i].innerHTML);
 
